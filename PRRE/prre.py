@@ -1,3 +1,5 @@
+#__author__:zhousheng
+
 from __future__ import print_function
 import numpy as np
 from scipy.special import expit as sigmoid
