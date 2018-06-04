@@ -1,7 +1,3 @@
-# Attribute Guided Random Walk
-# Basic Node2vec is from 'https://github.com/aditya-grover/node2vec'
-
-
 from __future__ import print_function
 import numpy as np
 from scipy.special import expit as sigmoid
