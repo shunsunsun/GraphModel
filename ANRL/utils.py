@@ -7,7 +7,6 @@ import random
 import tensorflow as tf
 
 def read_graph(FLAGS, edgeFile):
-	# Reads the input network in networkx
 	print "loading graph..."
 
 	if FLAGS.weighted:

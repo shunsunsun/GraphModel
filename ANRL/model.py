@@ -12,7 +12,6 @@ class Model:
         self.N = N
         self.dims = dims
 
-        # look up embeddings for inputs
         self.labels = tf.placeholder(tf.int32, shape = [None, 1])
         self.inputs = tf.placeholder(tf.int32, shape = [None])
         self.X_target = tf.constant(X_target, dtype = tf.float32)

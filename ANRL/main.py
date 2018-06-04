@@ -76,7 +76,6 @@ def construct_traget_neighbors(nx_G, X, FLAGS, mode = "WAN"):
 						temp = np.vstack((temp, X[n]))
 				temp = np.median(temp, axis = 0)
 				X_target[node] = temp
-
 		return X_target
 	elif mode == "WAN":
 		# autoencoder for reconstructing Weighted Average Neighbor
@@ -173,6 +172,11 @@ def main():
 			print "time elapsed: " + str(end - start)
 			total_loss = loss_sg/idx + loss_ae/idx
 			print "Total loss after " + str(idx) + " iterations: " + str(total_loss)
+
+    print "optimization finished..."
+    y = read_label(FLAGS.inputLabelFile)
+    embedding_result = sess.run(model.Y, feed_dict = {model.X: X})
+    node_classification_F1(embedding_result, y)
 
 if __name__ == "__main__":
 	main()

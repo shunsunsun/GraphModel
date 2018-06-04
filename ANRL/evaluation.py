@@ -57,11 +57,11 @@ def link_prediction_ROC(inputFileName, Embeddings):
 	return roc
 
 def node_classification_F1(Embeddings, y):
-	print "30% train..."
 	macro_f1_avg = 0
 	micro_f1_avg = 0
 	for i in range(10):
-		macro_f1, micro_f1 = multiclass_node_classification_eval(Embeddings, y, 0.7)
+        rnd = np.random.randint(2018)
+		macro_f1, micro_f1 = multiclass_node_classification_eval(Embeddings, y, 0.7, random_state = rnd)
 		macro_f1_avg += macro_f1
 		micro_f1_avg += micro_f1
 	macro_f1_avg /= 10

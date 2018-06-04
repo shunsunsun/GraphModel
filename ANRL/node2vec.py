@@ -12,9 +12,6 @@ class Graph():
 		self.q = q
 
 	def node2vec_walk(self, walk_length, start_node):
-		'''
-		Simulate a random walk starting from start node.
-		'''
 		G = self.G
 		alias_nodes = self.alias_nodes
 		alias_edges = self.alias_edges
