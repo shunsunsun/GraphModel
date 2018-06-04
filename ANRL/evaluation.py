@@ -23,11 +23,11 @@ def read_label(inputFileName):
     return y
 
 
-def multiclass_node_classification_eval(X, y, ratio=0.2):
+def multiclass_node_classification_eval(X, y, ratio=0.2, rnd=2018):
     warnings.filterwarnings("ignore")
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=ratio, random_state=2018)
+        X, y, test_size=ratio, random_state=rnd)
     clf = LinearSVC()
     clf.fit(X_train, y_train)
 
@@ -70,7 +70,7 @@ def node_classification_F1(Embeddings, y):
     for i in range(10):
         rnd = np.random.randint(2018)
         macro_f1, micro_f1 = multiclass_node_classification_eval(
-            Embeddings, y, 0.7, random_state=rnd)
+            Embeddings, y, 0.7, rnd)
         macro_f1_avg += macro_f1
         micro_f1_avg += micro_f1
     macro_f1_avg /= 10
