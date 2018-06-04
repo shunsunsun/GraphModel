@@ -81,7 +81,7 @@ class Model:
             [(tf.clip_by_norm(gv[0], 10), gv[1]) for gv in self.gradient_sg])
 
     def make_skipgram_loss(self):
-        loss = tf.reduce_mean(tf.nn.nce_loss(
+        loss = tf.reduce_sum(tf.nn.nce_loss(
             weights=self.nce_weights,
             biases=self.nce_biases,
             labels=self.labels,
@@ -114,7 +114,7 @@ class Model:
     def make_autoencoder_loss(self):
 
         def get_autoencoder_loss(X, newX):
-            return tf.reduce_mean(tf.pow((newX - X), 2))
+            return tf.reduce_sum(tf.pow((newX - X), 2))
 
         def get_reg_loss(weights, biases):
             reg = tf.add_n([tf.nn.l2_loss(w) for w in weights.itervalues()])
