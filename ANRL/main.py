@@ -152,7 +152,6 @@ def main():
 		idx += 1
 
 		batch_index, batch_labels = next(graph_context_batch_iter(all_pairs, batch_size))
-
 		batch_X = X[batch_index]
 
 		# train for autoencoder model
