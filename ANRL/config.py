@@ -10,6 +10,6 @@ class Config(object):
         # parameters for training
         self.batch_size = 512
         self.num_sampled = 10
-        self.max_iters = 30000
-        self.sg_learning_rate = 1e-5
-        self.ae_learning_rate = 1e-5
+        self.max_iters = 20000
+        self.sg_learning_rate = 1e-4
+        self.ae_learning_rate = 1e-4

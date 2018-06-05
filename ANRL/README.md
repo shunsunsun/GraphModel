@@ -68,10 +68,15 @@ The next n lines are as follows:
 node_id dim_1, dim_2, ... dim_d
 
 ### Run
-To run ANRL, just execute the following command:
+To run ANRL, just execute the following command for node classification task:
 ```
 python main.py
 ```
+Using the following command for link prediction task:
+```
+python main_link_prediction.py
+```
+
 
 Note:
 As for simulating random walks, we directly use the code provided in [node2vec](https://github.com/aditya-grover/node2vec), which levearges alias sampling to faciliate the procedure.

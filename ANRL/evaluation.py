@@ -53,13 +53,12 @@ def link_prediction_ROC(inputFileName, Embeddings):
     y_true = [X_test[i][2] for i in range(len(X_test))]
     y_predict = [cosine_similarity(Embeddings[X_test[i][0], :].reshape(
         1, -1), Embeddings[X_test[i][1], :].reshape(1, -1))[0, 0] for i in range(len(X_test))]
-    roc = roc_auc_score(y_true, y_predict)
+    auc = roc_auc_score(y_true, y_predict)
 
-    if roc < 0.5:
-        roc = 1 - roc
-
-    print "Evaluation ROC: " + str(roc)
-    return roc
+    if auc < 0.5:
+        auc = 1 - auc
+        
+    return auc
 
 
 def node_classification_F1(Embeddings, y):

@@ -125,7 +125,10 @@ def main():
     X = read_feature(inputFeatureFile)
 
     print "generating graph context pairs..."
+    start_time = time.time()
     all_pairs = generate_graph_context_all_pairs(walks, window_size)
+    end_time = time.time()
+    print "time consumed for constructing graph context: %.2f" %(end_time - start_time)
 
     nodes = nx_G.nodes()
     X_target = construct_traget_neighbors(nx_G, X, FLAGS, mode = "WAN")
@@ -193,7 +196,10 @@ def main():
     print "optimization finished..."
     y = read_label(FLAGS.inputLabelFile)
     embedding_result = sess.run(model.Y, feed_dict = {model.X: X})
+    print "repeat 10 times for node classification with random split..."
     node_classification_F1(embedding_result, y)
+    print "saving embedding result..."
+    write_embedding(embedding_result, FLAGS.outputEmbedFile)
 
 
 if __name__ == "__main__":
