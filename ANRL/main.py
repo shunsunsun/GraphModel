@@ -40,6 +40,7 @@ def generate_graph_context_all_pairs(path, window_size):
                     continue
                 else:
                     all_pairs.append([path[k][i], path[k][j]])
+    print "permutation graph context pairs..."
     return np.random.permutation(all_pairs)
 
 
@@ -58,7 +59,7 @@ def graph_context_batch_iter(all_pairs, batch_size):
         np.random.permutation(all_pairs)
 
 
-def construct_traget_neighbors(nx_G, X, FLAGS, mode="WAN"):
+def construct_traget_neighbors(nx_G, X, FLAGS, mode = "WAN"):
     # construct target neighbor feature matrix
     X_target = np.zeros(X.shape)
     nodes = nx_G.nodes()
@@ -81,7 +82,7 @@ def construct_traget_neighbors(nx_G, X, FLAGS, mode="WAN"):
                         pass
                     else:
                         temp = np.vstack((temp, X[n]))
-                temp = np.median(temp, axis=0)
+                temp = np.median(temp, axis = 0)
                 X_target[node] = temp
         return X_target
     elif mode == "WAN":
@@ -98,8 +99,8 @@ def construct_traget_neighbors(nx_G, X, FLAGS, mode="WAN"):
                         # temp += X[n] * edgeWeight
                         pass
                     else:
-                        temp += X[n]
-                temp /= (len(neighbors)+1)
+                        temp = np.vstack((temp, X[n]))
+                temp = np.mean(temp, axis = 0)
                 X_target[node] = temp
         return X_target
 
@@ -127,7 +128,7 @@ def main():
     all_pairs = generate_graph_context_all_pairs(walks, window_size)
 
     nodes = nx_G.nodes()
-    X_target = construct_traget_neighbors(nx_G, X, FLAGS, mode="WAN")
+    X_target = construct_traget_neighbors(nx_G, X, FLAGS, mode = "WAN")
 
     # Total number nodes
     N = len(nodes)
@@ -160,33 +161,38 @@ def main():
 
         batch_index, batch_labels = next(
             graph_context_batch_iter(all_pairs, batch_size))
-        batch_X = X[batch_index]
-
+        
         # train for autoencoder model
-        feed_dict = {model.X: batch_X, model.inputs: batch_index}
+        start_idx = np.random.randint(0, N - batch_size)
+        batch_idx = np.array(range(start_idx, start_idx + batch_size))
+        batch_idx = np.random.permutation(batch_idx)
+        batch_X = X[batch_idx]
+        feed_dict = {model.X: batch_X, model.inputs: batch_idx}
         _, loss_ae_value = sess.run(
-            [model.train_opt_ae, model.loss_ae], feed_dict=feed_dict)
+            [model.train_opt_ae, model.loss_ae], feed_dict = feed_dict)
         loss_ae += loss_ae_value
 
         # train for skip-gram model
+        batch_X = X[batch_index]
         feed_dict = {model.X: batch_X, model.labels: batch_labels}
         _, loss_sg_value = sess.run(
-            [model.train_opt_sg, model.loss_sg], feed_dict=feed_dict)
+            [model.train_opt_sg, model.loss_sg], feed_dict = feed_dict)
         loss_sg += loss_sg_value
 
         if idx % print_every_k_iterations == 0:
+            end = time.time()
+            print "iterations: %d" %(idx) + ", time elapsed: %.2f" %(end - start),
+            total_loss = loss_sg/idx + loss_ae/idx
+            print ", loss: %.2f" %(total_loss),
+
             y = read_label(FLAGS.inputLabelFile)
             embedding_result = sess.run(model.Y, feed_dict={model.X: X})
-            multiclass_node_classification_eval(embedding_result, y, 0.7)
-
-            end = time.time()
-            print "time elapsed: " + str(end - start)
-            total_loss = loss_sg/idx + loss_ae/idx
-            print "Total loss after " + str(idx) + " iterations: " + str(total_loss)
+            macro_f1, micro_f1 = multiclass_node_classification_eval(embedding_result, y, 0.7)
+            print ", [macro_f1 = %.4f, micro_f1 = %.4f]" %(macro_f1, micro_f1)
 
     print "optimization finished..."
     y = read_label(FLAGS.inputLabelFile)
-    embedding_result = sess.run(model.Y, feed_dict={model.X: X})
+    embedding_result = sess.run(model.Y, feed_dict = {model.X: X})
     node_classification_F1(embedding_result, y)
 
 

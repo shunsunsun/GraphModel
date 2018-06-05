@@ -28,7 +28,7 @@ node_2 node_3
 2. citeseer.feature: this file has n+1 lines.
 The first line has the following format:
 node_number feature_dimension
-The next n lines are as follows:
+The next n lines are as follows: (each node per line ordered by node id)
 (for node_1) feature_1 feature_2 ... feature_n
 (for node_2) feature_1 feature_2 ... feature_n
 ...
@@ -48,7 +48,7 @@ node_2 node_3
 2. unc.feature: this file has n+1 lines.
 The first line has the following format:
 node_number feature_dimension
-The next n lines are as follows:
+The next n lines are as follows: (each node per line ordered by node id)
 (for node_1) feature_1 feature_2 ... feature_n
 (for node_2) feature_1 feature_2 ... feature_n
 ...

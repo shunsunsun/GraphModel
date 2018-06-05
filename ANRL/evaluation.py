@@ -23,20 +23,18 @@ def read_label(inputFileName):
     return y
 
 
-def multiclass_node_classification_eval(X, y, ratio=0.2, rnd=2018):
+def multiclass_node_classification_eval(X, y, ratio = 0.2, rnd = 2018):
     warnings.filterwarnings("ignore")
 
     X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=ratio, random_state=rnd)
+        X, y, test_size = ratio, random_state = rnd)
     clf = LinearSVC()
     clf.fit(X_train, y_train)
 
     y_pred = clf.predict(X_test)
 
-    macro_f1 = f1_score(y_test, y_pred, average="macro")
-    micro_f1 = f1_score(y_test, y_pred, average="micro")
-
-    print "Classification macro_f1 = %f, micro_f1 = %f" % (macro_f1, micro_f1)
+    macro_f1 = f1_score(y_test, y_pred, average = "macro")
+    micro_f1 = f1_score(y_test, y_pred, average = "micro")
 
     return macro_f1, micro_f1
 
@@ -75,5 +73,5 @@ def node_classification_F1(Embeddings, y):
         micro_f1_avg += micro_f1
     macro_f1_avg /= 10
     micro_f1_avg /= 10
-    print "macro_f1 average value: " + str(macro_f1_avg)
-    print "micro_f1 average value: " + str(micro_f1_avg)
+    print "Macro_f1 average value: " + str(macro_f1_avg)
+    print "Micro_f1 average value: " + str(micro_f1_avg)

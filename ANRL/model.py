@@ -52,14 +52,7 @@ class Model:
         self.make_autoencoder_loss()
 
         # compute gradients for deep autoencoder
-        self.optimizer_ae = tf.train.AdamOptimizer(config.ae_learning_rate)
-        self.grads_all_ae = self.optimizer_ae.compute_gradients(self.loss_ae)
-        self.grads_vars_ae = [
-            v for (g, v) in self.grads_all_ae if g is not None]
-        self.gradient_ae = self.optimizer_ae.compute_gradients(
-            self.loss_ae, self.grads_vars_ae)
-        self.train_opt_ae = self.optimizer_ae.apply_gradients(
-            [(tf.clip_by_norm(gv[0], 10), gv[1]) for gv in self.gradient_ae])
+        self.train_opt_ae = tf.train.AdamOptimizer(config.ae_learning_rate).minimize(self.loss_ae)
 
         ############ define variables for skipgram  ####################
         # construct variables for nce loss
@@ -71,17 +64,10 @@ class Model:
         self.loss_sg = self.make_skipgram_loss()
 
         # compute gradients for skipgram
-        self.optimizer_sg = tf.train.AdamOptimizer(config.sg_learning_rate)
-        self.grads_all_sg = self.optimizer_sg.compute_gradients(self.loss_sg)
-        self.grads_vars_sg = [
-            v for (g, v) in self.grads_all_sg if g is not None]
-        self.gradient_sg = self.optimizer_sg.compute_gradients(
-            self.loss_sg, self.grads_vars_sg)
-        self.train_opt_sg = self.optimizer_sg.apply_gradients(
-            [(tf.clip_by_norm(gv[0], 10), gv[1]) for gv in self.gradient_sg])
+        self.train_opt_sg = tf.train.AdamOptimizer(config.sg_learning_rate).minimize(self.loss_sg)
 
     def make_skipgram_loss(self):
-        loss = tf.reduce_sum(tf.nn.nce_loss(
+        loss = tf.reduce_sum(tf.nn.sampled_softmax_loss(
             weights=self.nce_weights,
             biases=self.nce_biases,
             labels=self.labels,
