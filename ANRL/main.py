@@ -48,8 +48,8 @@ def graph_context_batch_iter(all_pairs, batch_size):
         i = 0
         j = i + batch_size
         while j < len(all_pairs):
-            batch = np.zeros((batch_size), dtype=np.int32)
-            labels = np.zeros((batch_size, 1), dtype=np.int32)
+            batch = np.zeros((batch_size), dtype = np.int32)
+            labels = np.zeros((batch_size, 1), dtype = np.int32)
             batch[:] = all_pairs[i:j, 0]
             labels[:, 0] = all_pairs[i:j, 1]
             yield batch, labels
