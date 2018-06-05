@@ -73,6 +73,9 @@ To run ANRL, just execute the following command:
 python main.py
 ```
 
+Note:
+As for simulating random walks, we directly use the code provided in [node2vec](https://github.com/aditya-grover/node2vec), which levearges alias sampling to faciliate the procedure.
+
 ## Citing
 If you find ANRL useful for your research, please consider citing the following paper:
 ```
