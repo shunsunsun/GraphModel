@@ -9,6 +9,7 @@ This is a Tensorflow implementation of the ANRL algorithm, which learns a low-di
 * numpy
 * scipy
 * scikit-learn
+
 All required packages are defined in requirements.txt. To install all requirement, just use the following commands:
 ```
 pip install -r requirements.txt
