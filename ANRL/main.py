@@ -181,14 +181,14 @@ def main():
 
         if idx % print_every_k_iterations == 0:
             end = time.time()
-            print "iterations: %d" %(idx) + ", time elapsed: %.2f" %(end - start),
+            print "iterations: %d" %(idx) + ", time elapsed: %.2f," %(end - start),
             total_loss = loss_sg/idx + loss_ae/idx
-            print ", loss: %.2f" %(total_loss),
+            print "loss: %.2f," %(total_loss),
 
             y = read_label(FLAGS.inputLabelFile)
             embedding_result = sess.run(model.Y, feed_dict={model.X: X})
             macro_f1, micro_f1 = multiclass_node_classification_eval(embedding_result, y, 0.7)
-            print ", [macro_f1 = %.4f, micro_f1 = %.4f]" %(macro_f1, micro_f1)
+            print "[macro_f1 = %.4f, micro_f1 = %.4f]" %(macro_f1, micro_f1)
 
     print "optimization finished..."
     y = read_label(FLAGS.inputLabelFile)
