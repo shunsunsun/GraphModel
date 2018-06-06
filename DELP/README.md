@@ -19,12 +19,12 @@ pip install -r requirements.txt
 ### Input Data 
 Each dataset contains 3 files: edgelist, features and labels.
 ```
-1. citeseer.edgelist: each line contains two connected nodes.
+1. cora.edgelist: each line contains two connected nodes.
 node_1 node_2
 node_2 node_3
 ...
 
-2. citeseer.feature: this file has n+1 lines.
+2. cora.feature: this file has n+1 lines.
 The first line has the following format:
 node_number feature_dimension
 The next n lines are as follows: (each node per line ordered by node id)
@@ -32,7 +32,7 @@ The next n lines are as follows: (each node per line ordered by node id)
 (for node_2) feature_1 feature_2 ... feature_n
 ...
 
-3. citeseer.label: each line represents a node and its class label.
+3. cora.label: each line represents a node and its class label.
 node_1 label_1
 node_2 label_2
 ...
