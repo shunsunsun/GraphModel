@@ -40,12 +40,12 @@ node_2 label_2
 ```
 For link predictin, each dataset contains 3 files: training edgelist, features and test edgelist.
 ```
-1. unc_train.edgelist: each line contains two connected nodes.
+1. xxx_train.edgelist: each line contains two connected nodes.
 node_1 node_2
 node_2 node_3
 ...
 
-2. unc.feature: this file has n+1 lines.
+2. xxx.feature: this file has n+1 lines.
 The first line has the following format:
 node_number feature_dimension
 The next n lines are as follows: (each node per line ordered by node id)
@@ -53,9 +53,9 @@ The next n lines are as follows: (each node per line ordered by node id)
 (for node_2) feature_1 feature_2 ... feature_n
 ...
 
-3. unc_test.edgelist: each line contains two connected nodes.
-node_1 node_2
-node_2 node_3
+3. xxx_test.edgelist: each line contains two connected nodes.
+node_1 node_2 1 (positive sample)
+node_2 node_3 0 (negative sample)
 ...
 ```
 
@@ -71,10 +71,6 @@ node_id dim_1, dim_2, ... dim_d
 To run ANRL, just execute the following command for node classification task:
 ```
 python main.py
-```
-Using the following command for link prediction task:
-```
-python main_link_prediction.py
 ```
 
 

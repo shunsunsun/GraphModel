@@ -40,23 +40,20 @@ def generate_graph_context_all_pairs(path, window_size):
                     continue
                 else:
                     all_pairs.append([path[k][i], path[k][j]])
-    print "permutation graph context pairs..."
-    return np.random.permutation(all_pairs)
+                    
+    return np.array(all_pairs, dtype = np.int32)
 
 
 def graph_context_batch_iter(all_pairs, batch_size):
     while True:
-        i = 0
-        j = i + batch_size
-        while j < len(all_pairs):
-            batch = np.zeros((batch_size), dtype = np.int32)
-            labels = np.zeros((batch_size, 1), dtype = np.int32)
-            batch[:] = all_pairs[i:j, 0]
-            labels[:, 0] = all_pairs[i:j, 1]
-            yield batch, labels
-            i = j
-            j = i + batch_size
-        np.random.permutation(all_pairs)
+    	start_idx = np.random.randint(0, len(all_pairs) - batch_size)
+    	batch_idx = np.array(range(start_idx, start_idx + batch_size))
+    	batch_idx = np.random.permutation(batch_idx)
+    	batch = np.zeros((batch_size), dtype = np.int32)
+    	labels = np.zeros((batch_size, 1), dtype = np.int32)
+    	batch[:] = all_pairs[batch_idx, 0]
+    	labels[:, 0] = all_pairs[batch_idx, 1]   
+    	yield batch, labels
 
 
 def construct_traget_neighbors(nx_G, X, FLAGS, mode = "WAN"):
@@ -110,6 +107,7 @@ def main():
     inputEdgeFile = FLAGS.inputEdgeFile
     inputFeatureFile = FLAGS.inputFeatureFile
     inputLabelFile = FLAGS.inputLabelFile
+    outputEmbedFile = FLAGS.outputEmbedFile
     window_size = FLAGS.window_size
 
     # Read graph
@@ -188,18 +186,18 @@ def main():
             total_loss = loss_sg/idx + loss_ae/idx
             print "loss: %.2f," %(total_loss),
 
-            y = read_label(FLAGS.inputLabelFile)
+            y = read_label(inputLabelFile)
             embedding_result = sess.run(model.Y, feed_dict={model.X: X})
             macro_f1, micro_f1 = multiclass_node_classification_eval(embedding_result, y, 0.7)
             print "[macro_f1 = %.4f, micro_f1 = %.4f]" %(macro_f1, micro_f1)
 
     print "optimization finished..."
-    y = read_label(FLAGS.inputLabelFile)
+    y = read_label(inputLabelFile)
     embedding_result = sess.run(model.Y, feed_dict = {model.X: X})
     print "repeat 10 times for node classification with random split..."
     node_classification_F1(embedding_result, y)
     print "saving embedding result..."
-    write_embedding(embedding_result, FLAGS.outputEmbedFile)
+    write_embedding(embedding_result, outputEmbedFile)
 
 
 if __name__ == "__main__":
