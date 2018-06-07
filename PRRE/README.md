@@ -36,10 +36,11 @@ node_2 label_2
 ```
 
 ### Run
-To run PRRE, just execute the following command for node classification task:
+To run PRRE, just execute the following command for node classification task and link prediction with different 'task' parameter:
 ```
 python prre.py
 ```
+For data visualization task, Embedding Projector is recommended to deal with the embedding result. 
 
 ### TODO
 The parallel and distributed version of PRRE will be released later.
