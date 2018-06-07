@@ -65,7 +65,7 @@ The output file has n+1 lines as the input feature files. The first line has the
 node_number embedding_dimension
 ```
 The next n lines are as follows:
-node_id dim_1, dim_2, ... dim_d
+node_id, dim_1, dim_2, ... dim_d
 
 ### Run
 To run ANRL, just execute the following command for node classification task:
