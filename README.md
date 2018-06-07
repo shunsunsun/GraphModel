@@ -7,4 +7,14 @@ Large scale graphical modeling has been playing a key role in assuring success i
 
 3. Reliability: Observed edges or node labels can be polluted and thus are not reliable.   
 
-To solve the above mentioned challenges, we propose a principled effort to investigate a new framework of deep graph that seamlessly integrates computing, learning and inference in a consistent and optimum set up.  
+To solve the above mentioned challenges, we propose a principled effort to investigate a new framework of deep graph that seamlessly integrates computing, learning and inference in a consistent and optimum set up. Current checked in methods and papers include the following list which is still growing:  
+
+1. ANRL: Attributed Network Representation Learning via Deep Neural Networks (IJCAI-18)
+
+2. DELP: Semi-Supervised Learning Through Dynamic Graph Embedding and Label Propagation (Under Review) 
+
+3. PGRR: Mobile Access Record Resolution on Large-Scale Identifier-Linkage Graphs (KDD-18)
+
+4. PRRE: Personalized Relation Ranking Embedding for A ributed Network (Under Review) 
+
+
