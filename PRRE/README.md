@@ -36,7 +36,7 @@ node_2 label_2
 ```
 
 ### Run
-To run DELP, just execute the following command for node classification task:
+To run PRRE, just execute the following command for node classification task:
 ```
 python prre.py
 ```
