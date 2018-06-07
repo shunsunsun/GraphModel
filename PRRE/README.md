@@ -25,8 +25,8 @@ node_2 node_3
 ...
 
 2. dataset.feature: this file has n lines.
-(for node_1) feature_1 feature_2 ... feature_n
-(for node_2) feature_1 feature_2 ... feature_n
+feature_1 feature_2 ... feature_n
+feature_1 feature_2 ... feature_n
 ...
 
 3. dataset.label: each line represents a node and its class label.
